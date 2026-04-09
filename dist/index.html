@@ -3,11 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Configuración de viewport: user-scalable=yes permite que el usuario haga zoom manual si lo desea -->
+    <!-- Viewport optimizado para móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
+    <!-- Verificación de Google Search Console -->
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
 
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DC7SHETDV"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,71 +21,42 @@
     <title>PDF MAYA PRO - Edición y Firma Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      /* --- RESET GLOBAL PARA MÓVILES MATÍAS MAYA --- */
+      /* Reset para móviles */
       html, body {
         margin: 0;
         padding: 0;
         width: 100%;
-        /* Evita el scroll horizontal que rompe la experiencia */
         overflow-x: hidden; 
         -webkit-tap-highlight-color: transparent;
         background-color: #f1f5f9;
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       }
 
-      /* Optimizaciones de interacción táctil */
-      .touch-none {
-        touch-action: none !important;
-      }
+      .touch-none { touch-action: none !important; }
 
-      /* Evita zoom automático molesto en iPhone al tocar campos de texto */
-      input, select, textarea {
-        font-size: 16px !important;
-      }
-
-      /* Barras de desplazamiento minimalistas */
-      .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-
-      /* --- AJUSTES DE FUERZA BRUTA PARA EL MENÚ EN MÓVILES --- */
+      /* Ajustes de botones para que no se desborden en el celular de Matías */
       @media (max-width: 640px) {
-        /* Achicamos el texto de los botones para que entren uno al lado del otro */
-        button {
-          letter-spacing: 0.02em !important;
-        }
-        
-        /* Forzamos que los contenedores de los botones no se estiren */
         .mobile-header-container {
-          padding-left: 0.5rem !important;
-          padding-right: 0.5rem !important;
+          padding-left: 0.25rem !important;
+          padding-right: 0.25rem !important;
         }
 
-        /* Ajustes específicos para pantallas muy angostas (menos de 400px) */
-        @media (max-width: 400px) {
-          .mobile-btn-text {
-            font-size: 9px !important;
-            padding-left: 0.5rem !important;
-            padding-right: 0.5rem !important;
-          }
-          .mobile-icon {
-            width: 12px !important;
-            height: 12px !important;
-          }
+        .mobile-btn-text {
+          font-size: clamp(8px, 2.3vw, 10px) !important;
+          white-space: nowrap !important;
+          padding-left: 0.4rem !important;
+          padding-right: 0.4rem !important;
         }
-      }
 
-      /* Soporte para "Notch" de teléfonos modernos (Safe Area) */
-      .safe-top {
-        padding-top: env(safe-area-inset-top);
-      }
-      .safe-bottom {
-        padding-bottom: env(safe-area-inset-bottom);
+        .mobile-icon {
+          width: 12px !important;
+          height: 12px !important;
+        }
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-DvP5rhTr.js"></script>
+    <script type="module" crossorigin src="/assets/index-CsYgOfh-.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C6G_3qQV.css">
   </head>
   <body>
-    <div id="root" class="safe-top safe-bottom"></div>
+    <div id="root"></div>
   </body>
 </html>
