@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Configuración de viewport equilibrada para permitir zoom manual sin romper el layout -->
+    <!-- Configuración de viewport optimizada para evitar el desplazamiento lateral y permitir zoom -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
@@ -38,6 +38,17 @@
       /* Scrollbars elegantes */
       .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
       .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+      /* Ajustes específicos para que los botones no se desborden en móviles */
+      @media (max-width: 400px) {
+        .mobile-btn-text {
+          font-size: 8px !important;
+        }
+        .mobile-icon {
+          width: 12px !important;
+          height: 12px !important;
+        }
+      }
     </style>
     <script type="module" crossorigin src="/assets/index-DvP5rhTr.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C6G_3qQV.css">
