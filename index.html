@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <!-- 1. El 'corazón' técnico de la página -->
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Verificación de Google Search Console -->
+    <!-- 2. La llave para Google Search Console -->
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
 
+    <!-- 3. Google Analytics (gtag.js) - PARA MÉTRICAS Y VISITAS -->
+    <!-- Este código permite que Google te diga cuánta gente usa PDF MAYA PRO -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DC7SHETDV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3DC7SHETDV');
+    </script>
+
+    <!-- 4. El título que aparece en la pestaña del navegador -->
     <title>PDF MAYA PRO - Edición y Firma Profesional</title>
+
+    <!-- 5. El diseño (Tailwind) -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
+    <!-- 6. Contenedor de la App -->
     <div id="root"></div>
+
+    <!-- 7. El archivo principal que maneja la lógica -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
