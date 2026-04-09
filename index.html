@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- 1. Configuración técnica: Se habilita el zoom manual (user-scalable=yes) -->
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <!-- Configuración de viewport equilibrada para permitir zoom manual sin romper el layout -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
-    <!-- 2. Verificación de Propiedad (Search Console) -->
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
 
-    <!-- 3. Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DC7SHETDV"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -21,23 +19,24 @@
     <title>PDF MAYA PRO - Edición y Firma Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      /* Optimizaciones globales para móviles */
       body {
         -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
-        /* Permitimos el scroll normal pero evitamos rebotes molestos */
-        overscroll-behavior-y: none;
-        background-color: #f8fafc;
+        background-color: #f1f5f9;
+        /* Evita el scroll horizontal accidental que marea al usuario */
+        overflow-x: hidden;
       }
       
-      /* Mejoras de legibilidad en móviles */
-      input, select, textarea {
-        font-size: 16px !important; /* Evita zoom automático al clickear inputs en iOS */
+      /* Optimizaciones de interacción táctil */
+      .touch-none {
+        touch-action: none !important;
       }
 
-      /* Scrollbars personalizados */
-      .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+
+      /* Scrollbars elegantes */
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
       .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
   </head>
