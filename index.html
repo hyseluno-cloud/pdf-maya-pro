@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Configuración de viewport optimizada para evitar el desplazamiento lateral y permitir zoom -->
+    <!-- Configuración de viewport: user-scalable=yes permite que el usuario haga zoom manual si lo desea -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
@@ -19,40 +19,70 @@
     <title>PDF MAYA PRO - Edición y Firma Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      body {
+      /* --- RESET GLOBAL PARA MÓVILES MATÍAS MAYA --- */
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        /* Evita el scroll horizontal que rompe la experiencia */
+        overflow-x: hidden; 
         -webkit-tap-highlight-color: transparent;
         background-color: #f1f5f9;
-        /* Evita el scroll horizontal accidental que marea al usuario */
-        overflow-x: hidden;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       }
-      
+
       /* Optimizaciones de interacción táctil */
       .touch-none {
         touch-action: none !important;
       }
 
+      /* Evita zoom automático molesto en iPhone al tocar campos de texto */
       input, select, textarea {
         font-size: 16px !important;
       }
 
-      /* Scrollbars elegantes */
+      /* Barras de desplazamiento minimalistas */
       .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
       .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-      /* Ajustes específicos para que los botones no se desborden en móviles */
-      @media (max-width: 400px) {
-        .mobile-btn-text {
-          font-size: 8px !important;
+      /* --- AJUSTES DE FUERZA BRUTA PARA EL MENÚ EN MÓVILES --- */
+      @media (max-width: 640px) {
+        /* Achicamos el texto de los botones para que entren uno al lado del otro */
+        button {
+          letter-spacing: 0.02em !important;
         }
-        .mobile-icon {
-          width: 12px !important;
-          height: 12px !important;
+        
+        /* Forzamos que los contenedores de los botones no se estiren */
+        .mobile-header-container {
+          padding-left: 0.5rem !important;
+          padding-right: 0.5rem !important;
         }
+
+        /* Ajustes específicos para pantallas muy angostas (menos de 400px) */
+        @media (max-width: 400px) {
+          .mobile-btn-text {
+            font-size: 9px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+          }
+          .mobile-icon {
+            width: 12px !important;
+            height: 12px !important;
+          }
+        }
+      }
+
+      /* Soporte para "Notch" de teléfonos modernos (Safe Area) */
+      .safe-top {
+        padding-top: env(safe-area-inset-top);
+      }
+      .safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
       }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" class="safe-top safe-bottom"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
