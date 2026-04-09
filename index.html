@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- 1. Configuración técnica mejorada para móviles -->
+    <!-- 1. Configuración técnica: Se habilita el zoom manual (user-scalable=yes) -->
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     
     <!-- 2. Verificación de Propiedad (Search Console) -->
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
@@ -25,19 +25,23 @@
       body {
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
-        overscroll-behavior-y: contain;
+        /* Permitimos el scroll normal pero evitamos rebotes molestos */
+        overscroll-behavior-y: none;
+        background-color: #f8fafc;
       }
-      /* Evitar que el zoom automático de iPhone rompa el diseño en inputs */
+      
+      /* Mejoras de legibilidad en móviles */
       input, select, textarea {
-        font-size: 16px !important;
+        font-size: 16px !important; /* Evita zoom automático al clickear inputs en iOS */
       }
+
+      /* Scrollbars personalizados */
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
