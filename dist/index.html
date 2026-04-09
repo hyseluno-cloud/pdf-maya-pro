@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- 1. Configuración técnica -->
+    <!-- 1. Configuración técnica mejorada para móviles -->
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
     <!-- 2. Verificación de Propiedad (Search Console) -->
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
 
-    <!-- 3. Google Analytics (Tu ID: G-3DC7SHETDV) -->
-    <!-- Este es el código que activa el flujo de datos de tu captura de pantalla -->
+    <!-- 3. Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DC7SHETDV"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3DC7SHETDV');
     </script>
 
     <title>PDF MAYA PRO - Edición y Firma Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Optimizaciones globales para móviles */
+      body {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        overscroll-behavior-y: contain;
+      }
+      /* Evitar que el zoom automático de iPhone rompa el diseño en inputs */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    </style>
     <script type="module" crossorigin src="/assets/index-DvP5rhTr.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C6G_3qQV.css">
   </head>
   <body>
+    <div id="root"></div>
+  </body>
+</html>
     <div id="root"></div>
   </body>
 </html>
