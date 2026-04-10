@@ -3,10 +3,14 @@ import {
   Plus, Trash2, Download, Upload, AlertCircle, 
   CheckCircle2, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, 
   Edit3, MousePointer2, Zap, Lock, PenTool, Move, Maximize,
-  ShieldCheck, Smartphone, Crown, X, CreditCard
+  ShieldCheck, Smartphone, Crown, X, CreditCard, KeyRound,
+  MessageCircle
 } from 'lucide-react';
 
-// Cargador de librerías externas
+// --- CONFIGURACIÓN DE NEGOCIO MATÍAS ---
+const PRO_ACTIVATION_CODE = "MAYA2026"; 
+const WHATSAPP_NUMBER = "5492477504615"; // Reemplaza con tu número real (formato internacional sin el +)
+
 const loadScripts = () => {
   return Promise.all([
     new Promise((resolve) => {
@@ -39,6 +43,7 @@ const App = () => {
   const [zoom, setZoom] = useState(1.0);
   const [isPro, setIsPro] = useState(false); 
   const [showPayModal, setShowPayModal] = useState(false);
+  const [inputCode, setInputCode] = useState(""); 
   
   const [detectedText, setDetectedText] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -189,7 +194,6 @@ const App = () => {
     setLoading(false);
   };
 
-  // FUNCIONES DE FIRMA
   const getCoords = (e) => {
     const canvas = signatureCanvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
@@ -220,7 +224,6 @@ const App = () => {
     ctx.stroke();
   };
 
-  // Esta función es vital: convierte el dibujo en imagen y cambia el modo
   const prepareSignaturePlacement = () => {
     const sigCanvas = signatureCanvasRef.current;
     if (!sigCanvas) return;
@@ -269,6 +272,21 @@ const App = () => {
         height: Math.max(25, resizeStartPos.current.h + deltaY)
       });
     }
+  };
+
+  const handleVerifyCode = () => {
+    if (inputCode.trim().toUpperCase() === PRO_ACTIVATION_CODE) {
+      setIsPro(true);
+      setShowPayModal(false);
+      showStatus('success', '¡Versión PRO activada!');
+    } else {
+      showStatus('error', 'Código incorrecto. Reintenta.');
+    }
+  };
+
+  const handleWhatsAppNotify = () => {
+    const message = encodeURIComponent("Hola Matías, acabo de realizar el pago para PDF Maya Pro. ¿Me podrías enviar mi código de activación?");
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
   };
 
   return (
@@ -349,7 +367,6 @@ const App = () => {
         </div>
       ) : (
         <>
-          {/* Toolbar de Edición */}
           <div className="bg-white border-b border-slate-100 p-1 md:p-3 flex flex-col md:flex-row gap-2 sticky top-[73px] z-50 shadow-md mobile-header-container">
             <div className="flex items-center justify-between w-full md:w-auto gap-1">
                <div className="flex flex-1 md:flex-none gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200">
@@ -380,7 +397,6 @@ const App = () => {
           </div>
 
           <div className="flex-1 overflow-auto bg-[#ebeef3] flex justify-center p-4 sm:p-10 custom-scrollbar relative">
-            {/* MARCA DE AGUA VISUAL EN EL EDITOR */}
             {!isPro && (
               <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center overflow-hidden opacity-10 select-none">
                 <div className="grid grid-cols-2 gap-20 rotate-[-45deg] scale-150">
@@ -394,9 +410,8 @@ const App = () => {
             <div className="relative shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] bg-white h-fit transition-transform duration-300 origin-top" style={{ width: canvasRef.current ? canvasRef.current.width / (window.devicePixelRatio || 1) : '100%' }}>
               <canvas ref={canvasRef} className="block w-full h-auto" />
               
-              {/* Capa de Edición */}
               {mode === 'edit' && detectedText.map((item, i) => (
-                <div key={i} className={`absolute border-2 border-transparent hover:border-indigo-400/30 hover:bg-indigo-500/5 cursor-text transition-all ${editingIndex === i ? 'border-indigo-600 bg-white/20 ring-[8px] ring-indigo-500/10 z-40' : ''}`}
+                <div key={i} className={`absolute border-2 border-transparent hover:border-indigo-400/30 hover:bg-indigo-500/5 cursor-text transition-all ${editingIndex === i ? 'border-indigo-600 bg-white/20 ring-[8px] ring-indigo-500/10 z-40 scale-[1.02]' : ''}`}
                   style={{ left: item.x - 2, top: item.y - 2, width: item.width + 12, height: item.height + 4 }}
                   onClick={(e) => { e.stopPropagation(); setEditingIndex(i); setTempText(item.str); }}>
                   {editingIndex === i && (
@@ -414,7 +429,6 @@ const App = () => {
                 </div>
               ))}
 
-              {/* Firma Ajustable */}
               {mode === 'place_sign' && signatureImg && (
                 <div className="absolute cursor-move border-2 border-dashed border-indigo-500 z-40 bg-indigo-500/5 touch-none group"
                   style={{ left: sigPos.x, top: sigPos.y, width: sigSize.width, height: sigSize.height }}
@@ -435,7 +449,6 @@ const App = () => {
         </>
       )}
 
-      {/* Modal de Firma con botón CONTINUAR reparado */}
       {mode === 'sign' && (
         <div className="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
            <div className="bg-white p-8 rounded-[3rem] shadow-2xl w-full max-w-sm border border-slate-100 animate-in fade-in zoom-in duration-300">
@@ -464,46 +477,67 @@ const App = () => {
       {/* Modal de Pago - Mercado Pago Matías Maya */}
       {showPayModal && (
         <div className="fixed inset-0 z-[200] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
-           <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-md overflow-hidden border border-slate-100 animate-in fade-in zoom-in duration-300">
-              <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-8 text-white text-center relative">
-                <button onClick={() => setShowPayModal(false)} className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors"><X size={24} /></button>
-                <div className="bg-white/20 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
+           <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-md overflow-hidden border border-slate-100 animate-in fade-in zoom-in duration-300 flex flex-col md:flex-row">
+              {/* Lado Izquierdo: Info de Pago */}
+              <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-8 text-white text-center relative md:w-1/2 flex flex-col justify-center items-center">
+                <button onClick={() => setShowPayModal(false)} className="absolute top-6 left-6 text-white/50 hover:text-white transition-colors md:hidden"><X size={24} /></button>
+                <div className="bg-white/20 w-16 h-16 rounded-3xl flex items-center justify-center mb-4 backdrop-blur-md">
                   <Crown size={32} />
                 </div>
                 <h2 className="text-2xl font-black tracking-tighter uppercase leading-none">Versión Pro</h2>
                 <p className="text-indigo-100 text-[10px] font-bold uppercase tracking-widest mt-2">Remueve marcas de agua para siempre</p>
+                <div className="mt-8 text-3xl font-black tracking-tighter">$1.500 <span className="text-xs opacity-60">ARS</span></div>
               </div>
-              <div className="p-8 space-y-6">
+
+              {/* Lado Derecho: Acción de Activación */}
+              <div className="p-8 flex-1 bg-white space-y-6 relative">
+                <button onClick={() => setShowPayModal(false)} className="absolute top-4 right-4 text-slate-300 hover:text-slate-600 hidden md:block"><X size={20} /></button>
+                
                 <div className="space-y-4">
-                  <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><CheckCircle2 size={18}/></div>
-                    <span className="text-[10px] font-black text-slate-700 uppercase tracking-widest">Sin marcas de agua</span>
-                  </div>
-                  <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><CheckCircle2 size={18}/></div>
-                    <span className="text-[10px] font-black text-slate-700 uppercase tracking-widest">Descargas ilimitadas</span>
-                  </div>
-                </div>
-                <div className="pt-4 text-center">
-                  <div className="text-4xl font-black text-slate-900 tracking-tighter mb-2">$1.500 <span className="text-sm text-slate-400 tracking-widest uppercase">ARS</span></div>
-                  <button 
-                    onClick={() => { 
-                      window.open("https://mpago.li/2cXEwL6", "_blank");
-                      setIsPro(true);
-                      setShowPayModal(false);
-                      showStatus('success', '¡Gracias por tu apoyo!');
-                    }}
-                    className="w-full bg-indigo-600 text-white py-5 rounded-3xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 flex items-center justify-center gap-3 hover:bg-slate-900 transition-all active:scale-95"
+                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Paso 1: Realiza el pago</p>
+                   <button 
+                    onClick={() => window.open("https://mpago.li/2cXEwL6", "_blank")}
+                    className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg flex items-center justify-center gap-3 hover:bg-slate-900 transition-all active:scale-95"
                   >
-                    <CreditCard size={18} /> Pagar con Mercado Pago
+                    <CreditCard size={18} /> Pagar ahora
                   </button>
+                   <button 
+                    onClick={handleWhatsAppNotify}
+                    className="w-full bg-emerald-50 text-emerald-700 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest border border-emerald-100 flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all"
+                  >
+                    <MessageCircle size={16} /> Ya pagué, enviar comprobante
+                  </button>
+                </div>
+
+                <div className="h-px bg-slate-100 w-full"></div>
+
+                <div className="space-y-4">
+                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Paso 2: Activa con tu código</p>
+                   <div className="relative">
+                      <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
+                      <input 
+                        type="text" 
+                        placeholder="Ingresa tu código..." 
+                        value={inputCode}
+                        onChange={(e) => setInputCode(e.target.value)}
+                        className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl text-xs font-bold uppercase focus:border-indigo-600 outline-none transition-all"
+                      />
+                   </div>
+                   <button 
+                    onClick={handleVerifyCode}
+                    className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-600 transition-all"
+                  >
+                    Validar Código
+                  </button>
+                   <p className="text-[8px] text-slate-400 font-bold uppercase text-center leading-relaxed">
+                     Recibirás el código por WhatsApp <br/> luego de confirmar tu pago.
+                   </p>
                 </div>
               </div>
            </div>
         </div>
       )}
 
-      {/* Pantalla de carga */}
       {loading && (
         <div className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[300] flex flex-col items-center justify-center gap-8">
           <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
@@ -511,7 +545,6 @@ const App = () => {
         </div>
       )}
 
-      {/* Alertas Toasts */}
       {status.message && (
         <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-4 rounded-[2rem] shadow-2xl border flex items-center gap-3 z-[250] animate-in slide-in-from-bottom-10 duration-500 bg-white text-slate-800 border-slate-100`}>
            {status.type === 'error' ? <AlertCircle size={18} className="text-red-500" /> : <CheckCircle2 size={18} className="text-emerald-500" />}
