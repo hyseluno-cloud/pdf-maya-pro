@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Viewport optimizado para móviles -->
+    <!-- Viewport optimizado para móviles y zoom manual -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
     <!-- Verificación de Google Search Console -->
     <meta name="google-site-verification" content="aR5At_QjyOY1lb09NVlYBOHvn8OLfzipsDTKUvUa7iA" />
 
-    <!-- Google Analytics -->
+    <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DC7SHETDV"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -21,19 +21,22 @@
     <title>PDF MAYA PRO - Edición y Firma Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      /* Reset para móviles */
+      /* Reset global para evitar desbordamientos en móviles */
       html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         overflow-x: hidden; 
         -webkit-tap-highlight-color: transparent;
-        background-color: #f1f5f9;
+        background-color: #f8fafc;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       }
 
-      .touch-none { touch-action: none !important; }
+      .touch-none {
+        touch-action: none !important;
+      }
 
-      /* Ajustes de botones para que no se desborden en el celular de Matías */
+      /* Estilos para el Toolbar responsivo */
       @media (max-width: 640px) {
         .mobile-header-container {
           padding-left: 0.25rem !important;
@@ -52,10 +55,13 @@
           height: 12px !important;
         }
       }
+
+      .safe-top { padding-top: env(safe-area-inset-top); }
+      .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" class="safe-top safe-bottom"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
